@@ -16,11 +16,11 @@ const userSchema = new mongoose.Schema({
 
 userSchema.plugin(passportLocalMongoose);
 
-const User = new mongoose.model("User", userSchema);
+// const User = new mongoose.model("User", userSchema);
 
-passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+// passport.use(User.createStrategy());
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
 
 module.exports.register = 
     async (data)=>{
@@ -62,6 +62,6 @@ module.exports.login =
         return user;
     }
 
-module.exports.User = User;
+// module.exports.User = User;
 
-module.exports.userSchema = userSchema;
+module.exports = userSchema;

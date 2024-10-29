@@ -9,6 +9,7 @@ const indexRouter = require("./routes/index")
 const scripts = require("./scripts");
 
 const app = express();
+scripts.createUserAdm();
 
 const test = true;
 
@@ -34,6 +35,7 @@ app.use(passport.session());
 app.use(cors());
 
 app.use("/", indexRouter)
+app.use("/criarbase", authMiddleware);
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
 

@@ -1,7 +1,6 @@
-const dao = require("../dao/conn");
-const mongoose = dao.conn;
+const {Schema} = require("mongoose");
 
-const ipSchema = new mongoose.Schema({
+const ipSchema = new Schema({
     block1: {
         type: Number,
         min: 0,
@@ -32,6 +31,4 @@ const dbSchema = new mongoose.Schema({
     IPEnd: {ipSchema}, //faixa de IPs permissiveis a acessar a rota de UNIDADES (UTI) de cada DB
 });
 
-const Database = new mongoose.model("Database", dbSchema);
-
-module.exports = Database;
+module.exports = dbSchema;

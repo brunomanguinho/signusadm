@@ -1,4 +1,4 @@
-const u = require("../models/users");
+const u = require("../schemas/users");
 
 module.exports.registerUser = 
     async (username, password, profile)=>{

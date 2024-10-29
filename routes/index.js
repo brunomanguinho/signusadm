@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const u = require("../models/users")
-const Database = require("../models/databases");
+const u = require("../schemas/users")
+const Database = require("../schemas/databases");
 const scripts = require("../scripts");
 
 router.get("/", async (req, res)=>{
@@ -40,7 +40,7 @@ router.post("/criarbase", async (req, res)=>{
 
     console.log(req.body);
 
-    scripts.createDataBase({name: req.body.name}, req.body.unity, req.body.user, req.body.room)
+    scripts.createDataBase({name: req.body.name, dbname: req.body.dbname}, req.body.unity, req.body.user, req.body.room)
 
     res.redirect("/");
 })

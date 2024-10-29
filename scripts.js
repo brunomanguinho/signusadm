@@ -1,4 +1,4 @@
-const user = require("./models/users");
+const user = require("./schemas/users");
 const mongoose = require("mongoose");
 const passportLocalMongoose = require("passport-local-mongoose");
 
@@ -17,8 +17,8 @@ module.exports.createUserAdm =
                 let register = await
                     user.register({
                         username: "adm",
-                        password: "signus@2024",
-                        confirmedPassword: "signus@2024",
+                        password: "123",
+                        confirmedPassword: "123",
                         profile: "Administrador"
                     });
 
@@ -35,61 +35,61 @@ module.exports.createUserAdm =
 
 module.exports.createHospital = 
     async(name)=>{
-        const hospitalSchema = new mongoose.Schema({
-            name: String,
-            slogan: String,  
-            logoPath: String,
-            createDate: Date
-        });
+        // const hospitalSchema = new mongoose.Schema({
+        //     name: String,
+        //     slogan: String,  
+        //     logoPath: String,
+        //     createDate: Date
+        // });
 
-        const Hospital = new mongoose.model("Hospital", {hospitalSchema});
+        // const Hospital = new mongoose.model("Hospital", {hospitalSchema});
 
-        let h = new Hospital({
-            name: name,
-            createDate: new Date()
-        });
+        // let h = new Hospital({
+        //     name: name,
+        //     createDate: new Date()
+        // });
 
-        await h.save();
+        // await h.save();
 
-        return h;
+        // return h;
     }
 
 module.exports.createUnity = 
     async(unity)=>{
-        const unitySchema = new mongoose.Schema({
-            user_id:{
-                type: mongoose.ObjectId,
-                ref: "User"
-            },
-            hospital_id:{
-                type: mongoose.ObjectId,
-                ref: "Hospital"
-            },
-            name: String,
-            rooms:[
-                {number: Number}
-            ]
-        });
+        // const unitySchema = new mongoose.Schema({
+        //     user_id:{
+        //         type: mongoose.ObjectId,
+        //         ref: "User"
+        //     },
+        //     hospital_id:{
+        //         type: mongoose.ObjectId,
+        //         ref: "Hospital"
+        //     },
+        //     name: String,
+        //     rooms:[
+        //         {number: Number}
+        //     ]
+        // });
 
-        const Unity = new mongoose.model("Unity", unitySchema);
+        // const Unity = new mongoose.model("Unity", unitySchema);
         
-        let u = await this.createUser(username, "Planotinista");
+        // let u = await this.createUser(unity.username, "Plantonista");
 
-        if (u !== null) {
-            let rooms = [];
-            for(let i=1; i<=unity.rooms; i++){
-                rooms.push({number: i});
-            }
+        // if (u !== null) {
+        //     let rooms = [];
+        //     for(let i=1; i<=unity.rooms; i++){
+        //         rooms.push({number: i});
+        //     }
 
-            let un = new Unity({
-                user_id: u._id,
-                hospital_id: unity.hospital._id,
-                name: unity.name,
-                rooms: rooms
-            });
+        //     let un = new Unity({
+        //         user_id: u._id,
+        //         hospital_id: unity.hospital._id,
+        //         name: unity.name,
+        //         rooms: rooms
+        //     });
 
-            await un.save();
-        }
+        //     await un.save();
+        // }
     }
 
 module.exports.createUser = 
@@ -124,9 +124,9 @@ module.exports.createUser =
 
 module.exports.createDataBase = 
     async(database, unities, users, rooms)=>{
-        console.log("inside script");
-        mongoose.connect(`mongodb://127.0.0.1:27017/novoDB`);
-
+        console.log("inside script", database.dbname);
+        await mongoose.createConnection(`mongodb://127.0.0.1:27017/${database.dbname}`).asPromise();
+        console.log("mongoose connected", console.log(mongoose));
         try{
             const hospital = await this.createHospital(database.name);
 
@@ -134,7 +134,7 @@ module.exports.createDataBase =
                 if ( (unities) && (unities instanceof Object) ){
                     unities.forEach(async(unity, i) => {
                         await this.createUnity({
-                            hospital: h,
+                            hospital: hospital,
                             name: unity, 
                             username: users[i], 
                             rooms: rooms[i]
