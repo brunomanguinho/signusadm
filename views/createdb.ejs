@@ -1,0 +1,49 @@
+<%-include("partials/header")%>
+    <div class="container">
+        <h2>Criar nova base de dados</h2>
+        <form action="/criarbase" method="post">
+            <div class="row g-3">
+                <div class="col-12">
+                    <label for="name">Nome do Hospital</label>
+                    <input type="text" name="name" id="name" class="form-control" required>
+                </div>
+                <div class="col-12">
+                    <label for="dbname">Nome da Base</label>
+                    <input type="text" name="dbname" id="dbname" class="form-control" placeholder="Ex: 'hospbahiaDB'" required>
+                </div>
+                <div class="col-12">
+                    <label for="dbroute">Rota (Url)</label>
+                    <input type="text" name="dbroute" id="dbroute" class="form-control" placeholder="Ex: www.signus.com.br/NOME_ROTA" required>
+                </div>
+            </div>
+            <hr>
+            <h2>Unidades</h2>
+
+            <%for (let i=1; i <= 2; i++){%>
+                <%let idunity = "unity" + i %>
+                <%let idroom = "room" + i %>
+                <%let iduser = "user" + i %>
+                <div class="row">
+                    <div class="col-4">
+                        <label for="<%=idunity%>">Nome da Unidade</label>
+                        <input type="text" name="unity" id="<%=idunity%>" class="form-control">
+                    </div>
+                    <div class="col-4">
+                        <label for="<%=iduser%>">Login</label>
+                        <input type="text" name="user" id="<%=iduser%>" class="form-control">
+                    </div>
+                    <div class="col-4">
+                        <label for="<%=idroom%>">Quantidade de leitos</label>
+                        <input type="number" name="room" id="<%=idroom%>" class="form-control">
+                    </div>
+                </div>
+            <%}%>
+
+            
+
+            
+            
+            <input type="submit" value="Criar Base" class="btn btn-primary mt-3">
+        </form>
+    </div>
+<%-include("partials/footer")%>

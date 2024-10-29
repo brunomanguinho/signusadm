@@ -1,0 +1,18 @@
+<%-include("partials/header")%>
+    <div class="container">
+        <h2>Lista de Banco de Dados</h2>
+
+        <div class="row">
+            <%data.forEach(db => {%>
+                <div class="col border bg-info">
+                    <h4><%-db.name%></h4> 
+                    <p><%-db.route%></p>
+                </div>
+            <%});%>
+        </div>
+        <hr>
+        <form action="/criarbase" method="get">
+            <input type="submit" value="Criar Banco de Dados" class="btn btn-primary">
+        </form>
+    </div>
+<%-include("partials/footer")%>
